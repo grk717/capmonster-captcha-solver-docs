@@ -88,7 +88,12 @@ URL Запроса (anchor): `https://www.google.com/recaptcha/enterprise/anchor
     <p>Значение параметра `action`, которое передаётся виджетом ReCaptcha в Google и который при последующей верификации на сервере виден владельцу сайта. Указывайте этот параметр, если значение отличается от значения по умолчанию: *verify*</p>
 	<p>Пример в html:
 	<br/>*`grecaptcha.execute('site_key', {action:'login_test'})`*.</p>
-    
+
+    ---
+
+    <ParamItem title="minScore" type="double" />
+    Может иметь значение от **0.1** до **0.9**
+
     ---
 
     <ParamItem title="enterprisePayload" type="object" />
@@ -245,6 +250,7 @@ https://ru.api.capmonster.cloud/createTask
     "type": "RecaptchaV2EnterpriseTask",
     "websiteURL": "https://mydomain.com/page-with-recaptcha-enterprise",
     "websiteKey": "your-website-key",
+    "minScore": 0.3,
     "enterprisePayload": {
       "s": "your-value"
     }
@@ -271,6 +277,7 @@ https://ru.api.capmonster.cloud/createTask
     "type": "RecaptchaV2EnterpriseTask",
     "websiteURL": "https://mydomain.com/page-with-recaptcha-enterprise",
     "websiteKey": "your-website-key",
+    "minScore": 0.3,
     "enterprisePayload": {
       "s": "your-value"
     },

@@ -86,7 +86,12 @@ CapMonster Cloud 默认通过内置代理工作——这些代理已包含在费
     <p>ReCaptcha 小部件传递给 Google 的 `action` 参数值，网站所有者在服务器端后续验证时可以看到该值。如果该值不同于默认值 *verify*，请指定此参数。</p>
 	<p>html 示例：
 	<br/>*`grecaptcha.execute('site_key', {action:'login_test'})`*.</p>
-    
+
+    ---
+
+    <ParamItem title="minScore" type="double" />
+    可取值范围为 **0.1** 到 **0.9**
+
     ---
 
     <ParamItem title="enterprisePayload" type="object" />
@@ -224,6 +229,7 @@ Object.defineProperty(window, 'grecaptcha', {
     "type": "RecaptchaV2EnterpriseTask",
     "websiteURL": "https://mydomain.com/page-with-recaptcha-enterprise",
     "websiteKey": "your-website-key",
+    "minScore": 0.3,
     "enterprisePayload": {
       "s": "your-value"
     }
@@ -255,6 +261,7 @@ Object.defineProperty(window, 'grecaptcha', {
     "type": "RecaptchaV2EnterpriseTask",
     "websiteURL": "https://mydomain.com/page-with-recaptcha-enterprise",
     "websiteKey": "your-website-key",
+    "minScore": 0.3,
     "enterprisePayload": {
       "s": "your-value"
     },

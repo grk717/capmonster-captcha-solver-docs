@@ -88,6 +88,11 @@ In this example, `6LdIFr0ZAAAAAO3vz0O0OQrtAefzdJcWQM2TMYQH` is the value of the 
 
     ---
 
+    <ParamItem title="minScore" type="double" />
+    Can have a value from **0.1** to **0.9**
+
+    ---
+
 
     <ParamItem title="enterprisePayload" type="object" />
     Object containing additional reCAPTCHA Enterprise parameters.
@@ -225,6 +230,7 @@ https://api.capmonster.cloud/createTask
     "type": "RecaptchaV2EnterpriseTask",
     "websiteURL": "https://mydomain.com/page-with-recaptcha-enterprise",
     "websiteKey": "your-website-key",
+    "minScore": 0.3,
     "enterprisePayload": {
       "s": "your-value"
     }
@@ -251,6 +257,7 @@ https://api.capmonster.cloud/createTask
     "type": "RecaptchaV2EnterpriseTask",
     "websiteURL": "https://mydomain.com/page-with-recaptcha-enterprise",
     "websiteKey": "your-website-key",
+    "minScore": 0.3,
     "enterprisePayload": {
       "s": "your-value"
     },
