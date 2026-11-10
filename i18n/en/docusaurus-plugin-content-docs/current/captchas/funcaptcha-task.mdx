@@ -991,4 +991,104 @@ class Program
 
   </TabItem>
 
+  <TabItem value="php1" label="PHP" className="method-panel">
+
+<details>
+      <summary>Show code</summary>
+```php
+<?php
+
+// https://github.com/CapMonsterCloud/capmonster-php-captcha-solver
+
+require __DIR__ . '/vendor/autoload.php';
+
+use CapMonsterCloud\CapMonsterClient;
+use CapMonsterCloud\ClientOptions;
+use CapMonsterCloud\ProxyInfo;
+use CapMonsterCloud\ProxyType;
+use CapMonsterCloud\Requests\FuncaptchaRequest;
+
+// Specify your CapMonster Cloud API key
+$client = new CapMonsterClient(new ClientOptions('YOUR_API_KEY'));
+
+// FunCaptcha can only be solved using your own proxy
+$proxy = new ProxyInfo(ProxyType::Http, '123.45.67.89', 8080, 'username', 'password');
+
+$request = new FuncaptchaRequest(
+    'https://yourwebsite.com/page-with-funcaptcha',
+    'your-website-public-key',
+    $proxy,
+    funcaptchaApiJsSubdomain: 'your-funcaptcha-api-subdomain',
+    data: '{"blob":"your-blob-value"}',
+    userAgent: 'userAgentPlaceholder',
+);
+
+// You can check your balance if necessary
+printf("Balance: %.4f USD\n", $client->getBalance());
+
+$solution = $client->solve($request);
+print_r($solution);
+```
+</details>
+
+  </TabItem>
+
+  <TabItem value="go1" label="Go" className="method-panel">
+
+<details>
+      <summary>Show code</summary>
+```go
+// https://github.com/CapMonsterCloud/capmonster-go-captcha-solver
+
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+
+	capmonster "github.com/CapMonsterCloud/capmonster-go-captcha-solver/v2"
+)
+
+func main() {
+	// Specify your CapMonster Cloud API key
+	client := capmonster.New("YOUR_API_KEY")
+	ctx := context.Background()
+
+	// FunCaptcha can only be solved using your own proxy
+	proxy := &capmonster.Proxy{
+		Type:     capmonster.ProxyHTTP,
+		Address:  "123.45.67.89",
+		Port:     8080,
+		Login:    "username",
+		Password: "password",
+	}
+
+	request := capmonster.FuncaptchaRequest{
+		WebsiteURL:               "https://yourwebsite.com/page-with-funcaptcha",
+		WebsitePublicKey:         "your-website-public-key",
+		FuncaptchaAPIJSSubdomain: "your-funcaptcha-api-subdomain",
+		Data:                     "{\"blob\":\"your-blob-value\"}",
+		Proxy:                    proxy,
+		UserAgent:                "userAgentPlaceholder",
+	}
+
+	// You can check your balance if necessary
+	balance, err := client.GetBalance(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Balance: %.4f USD\n", balance)
+
+	solution, err := client.Solve(ctx, request)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Solution:", string(solution))
+}
+```
+</details>
+
+  </TabItem>
+
 </Tabs>

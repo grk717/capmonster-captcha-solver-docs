@@ -1418,4 +1418,200 @@ class Program
 
 </details>
   </TabItem>
+
+  <TabItem value="php" label="PHP" className="method-panel">
+
+<details>
+<summary>生成 X-HD 参数</summary>
+
+```php
+<?php
+
+// https://github.com/CapMonsterCloud/capmonster-php-captcha-solver
+
+require __DIR__ . '/vendor/autoload.php';
+
+use CapMonsterCloud\CapMonsterClient;
+use CapMonsterCloud\ClientOptions;
+use CapMonsterCloud\ProxyInfo;
+use CapMonsterCloud\ProxyType;
+use CapMonsterCloud\Requests\HuntCustomTaskRequest;
+
+// 请指定您的 CapMonster Cloud API 密钥
+$client = new CapMonsterClient(new ClientOptions('YOUR_API_KEY'));
+
+// 要解决 HUNT，必须使用您自己的代理
+$proxy = new ProxyInfo(ProxyType::Http, '123.45.67.89', 8080, 'username', 'password');
+
+$request = HuntCustomTaskRequest::fingerprint(
+    'https://yourwebsite.com/page-with-hunt',
+    'https://example.com/hd-api/external/apps/<app-hash>/api.js',
+    $proxy,
+    userAgent: 'userAgentPlaceholder',
+);
+
+// 如有需要，可以检查余额
+printf("Balance: %.4f USD\n", $client->getBalance());
+
+$solution = $client->solve($request);
+print_r($solution);
+```
+
+</details>
+
+<details>
+<summary>解决 CAPTCHA</summary>
+
+```php
+<?php
+
+// https://github.com/CapMonsterCloud/capmonster-php-captcha-solver
+
+require __DIR__ . '/vendor/autoload.php';
+
+use CapMonsterCloud\CapMonsterClient;
+use CapMonsterCloud\ClientOptions;
+use CapMonsterCloud\ProxyInfo;
+use CapMonsterCloud\ProxyType;
+use CapMonsterCloud\Requests\HuntCustomTaskRequest;
+
+// 请指定您的 CapMonster Cloud API 密钥
+$client = new CapMonsterClient(new ClientOptions('YOUR_API_KEY'));
+
+// 要解决 HUNT，必须使用您自己的代理
+$proxy = new ProxyInfo(ProxyType::Http, '123.45.67.89', 8080, 'username', 'password');
+
+$request = HuntCustomTaskRequest::byToken(
+    'https://yourwebsite.com/page-with-hunt',
+    'https://example.com/hd-api/external/apps/<app-hash>/api.js',
+    'your-site-meta-token',
+    $proxy,
+    userAgent: 'userAgentPlaceholder',
+);
+
+// 如有需要，可以检查余额
+printf("Balance: %.4f USD\n", $client->getBalance());
+
+$solution = $client->solve($request);
+print_r($solution);
+```
+
+</details>
+  </TabItem>
+
+  <TabItem value="go" label="Go" className="method-panel">
+
+<details>
+<summary>生成 X-HD 参数</summary>
+
+```go
+// https://github.com/CapMonsterCloud/capmonster-go-captcha-solver
+
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+
+	capmonster "github.com/CapMonsterCloud/capmonster-go-captcha-solver/v2"
+)
+
+func main() {
+	// 请指定您的 CapMonster Cloud API 密钥
+	client := capmonster.New("YOUR_API_KEY")
+	ctx := context.Background()
+
+	// 要解决 HUNT，必须使用您自己的代理
+	proxy := &capmonster.Proxy{
+		Type:     capmonster.ProxyHTTP,
+		Address:  "123.45.67.89",
+		Port:     8080,
+		Login:    "username",
+		Password: "password",
+	}
+
+	request := capmonster.HuntCustomTaskRequest{
+		WebsiteURL: "https://yourwebsite.com/page-with-hunt",
+		Metadata: capmonster.HuntMetadata{
+			APIGetLib: "https://example.com/hd-api/external/apps/<app-hash>/api.js",
+		},
+		Proxy:     proxy,
+		UserAgent: "userAgentPlaceholder",
+	}
+
+	// 如有需要，可以检查余额
+	balance, err := client.GetBalance(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Balance: %.4f USD\n", balance)
+
+	solution, err := client.Solve(ctx, request)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Solution:", string(solution))
+}
+```
+
+</details>
+
+<details>
+<summary>解决 CAPTCHA</summary>
+
+```go
+// https://github.com/CapMonsterCloud/capmonster-go-captcha-solver
+
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+
+	capmonster "github.com/CapMonsterCloud/capmonster-go-captcha-solver/v2"
+)
+
+func main() {
+	// 请指定您的 CapMonster Cloud API 密钥
+	client := capmonster.New("YOUR_API_KEY")
+	ctx := context.Background()
+
+	// 要解决 HUNT，必须使用您自己的代理
+	proxy := &capmonster.Proxy{
+		Type:     capmonster.ProxyHTTP,
+		Address:  "123.45.67.89",
+		Port:     8080,
+		Login:    "username",
+		Password: "password",
+	}
+
+	request := capmonster.HuntCustomTaskRequest{
+		WebsiteURL: "https://yourwebsite.com/page-with-hunt",
+		Metadata: capmonster.HuntMetadata{
+			APIGetLib: "https://example.com/hd-api/external/apps/<app-hash>/api.js",
+			Data:      "your-site-meta-token",
+		},
+		Proxy:     proxy,
+		UserAgent: "userAgentPlaceholder",
+	}
+
+	// 如有需要，可以检查余额
+	balance, err := client.GetBalance(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Balance: %.4f USD\n", balance)
+
+	solution, err := client.Solve(ctx, request)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Solution:", string(solution))
+}
+```
+
+</details>
+  </TabItem>
 </Tabs>

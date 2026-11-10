@@ -1079,4 +1079,102 @@ class Program
 }
 ```
 	</TabItem>
+
+  <TabItem value="php" label="PHP" className="method-panel">
+  <details>
+      <summary>Показать код</summary>
+```php
+<?php
+// https://github.com/CapMonsterCloud/capmonster-php-captcha-solver
+
+require __DIR__ . '/vendor/autoload.php';
+
+use CapMonsterCloud\CapMonsterClient;
+use CapMonsterCloud\ClientOptions;
+use CapMonsterCloud\ProxyInfo;
+use CapMonsterCloud\ProxyType;
+use CapMonsterCloud\Requests\DataDomeCustomTaskRequest;
+
+// Укажите ваш API-ключ CapMonster Cloud
+$client = new CapMonsterClient(new ClientOptions('YOUR_API_KEY'));
+
+// DataDome решается только с использованием вашего прокси
+$proxy = new ProxyInfo(ProxyType::Http, '123.45.67.89', 8080, 'username', 'password');
+
+$request = new DataDomeCustomTaskRequest(
+    'https://yourwebsite.com/page-with-datadome',
+    captchaUrl: 'your-captcha-url',
+    datadomeCookie: 'your-datadome-cookie',
+    proxy: $proxy,
+    datadomeVersion: DataDomeCustomTaskRequest::VERSION_NEW,
+    userAgent: 'userAgentPlaceholder',
+);
+
+// При необходимости можно проверить баланс
+echo 'Balance: ' . $client->getBalance() . PHP_EOL;
+
+$solution = $client->solve($request);
+print_r($solution);
+```
+    </details>
+  </TabItem>
+
+  <TabItem value="go" label="Go" className="method-panel">
+  <details>
+      <summary>Показать код</summary>
+```go
+// https://github.com/CapMonsterCloud/capmonster-go-captcha-solver
+
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+
+	capmonster "github.com/CapMonsterCloud/capmonster-go-captcha-solver/v2"
+)
+
+func main() {
+	ctx := context.Background()
+
+	// Укажите ваш API-ключ CapMonster Cloud
+	client := capmonster.New("YOUR_API_KEY")
+
+	// DataDome решается только с использованием вашего прокси
+	proxy := &capmonster.Proxy{
+		Type:     capmonster.ProxyHTTP,
+		Address:  "123.45.67.89",
+		Port:     8080,
+		Login:    "username",
+		Password: "password",
+	}
+
+	request := capmonster.DataDomeCustomTaskRequest{
+		WebsiteURL: "https://yourwebsite.com/page-with-datadome",
+		Metadata: capmonster.DataDomeMetadata{
+			CaptchaURL:      "your-captcha-url",
+			DatadomeCookie:  "your-datadome-cookie",
+			DatadomeVersion: capmonster.DataDomeVersionNew,
+		},
+		Proxy:     proxy,
+		UserAgent: "userAgentPlaceholder",
+	}
+
+	// При необходимости можно проверить баланс
+	balance, err := client.GetBalance(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Balance:", balance)
+
+	solution, err := client.Solve(ctx, request)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Solution:", string(solution))
+}
+```
+    </details>
+  </TabItem>
 </Tabs>

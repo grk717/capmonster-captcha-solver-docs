@@ -562,4 +562,98 @@ class Program
 </details>
   </TabItem>
 
+  <TabItem value="php" label="PHP" className="method-panel">
+<details>
+      <summary>显示代码</summary>
+```php
+<?php
+// https://github.com/CapMonsterCloud/capmonster-php-captcha-solver
+
+require __DIR__ . '/vendor/autoload.php';
+
+use CapMonsterCloud\CapMonsterClient;
+use CapMonsterCloud\ClientOptions;
+use CapMonsterCloud\ProxyInfo;
+use CapMonsterCloud\ProxyType;
+use CapMonsterCloud\Requests\ImpervaCustomTaskRequest;
+
+// 请指定您的 CapMonster Cloud API 密钥
+$client = new CapMonsterClient(new ClientOptions('YOUR_API_KEY'));
+
+// Imperva（Incapsula）只能使用您自己的代理进行解决
+$proxy = new ProxyInfo(ProxyType::Http, '123.45.67.89', 8080, 'username', 'password');
+
+$request = new ImpervaCustomTaskRequest(
+    'https://yourwebsite.com/page-with-imperva',
+    incapsulaScriptUrl: '_Incapsula_Resource?SWJIYLWA=1234567890abcdef1234567890abcdef',
+    incapsulaCookies: 'incap_ses_1234_5678901=testSessionValue1234567890abcdef==; visid_incap_5678901=testVisitorValue1234567890abcdef==;',
+    proxy: $proxy,
+);
+
+// 如有需要，可以检查余额
+echo 'Balance: ' . $client->getBalance() . PHP_EOL;
+
+$solution = $client->solve($request);
+print_r($solution);
+```
+</details>
+  </TabItem>
+
+  <TabItem value="go" label="Go" className="method-panel">
+<details>
+      <summary>显示代码</summary>
+```go
+// https://github.com/CapMonsterCloud/capmonster-go-captcha-solver
+
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+
+	capmonster "github.com/CapMonsterCloud/capmonster-go-captcha-solver/v2"
+)
+
+func main() {
+	ctx := context.Background()
+
+	// 请指定您的 CapMonster Cloud API 密钥
+	client := capmonster.New("YOUR_API_KEY")
+
+	// Imperva（Incapsula）只能使用您自己的代理进行解决
+	proxy := &capmonster.Proxy{
+		Type:     capmonster.ProxyHTTP,
+		Address:  "123.45.67.89",
+		Port:     8080,
+		Login:    "username",
+		Password: "password",
+	}
+
+	request := capmonster.ImpervaCustomTaskRequest{
+		WebsiteURL: "https://yourwebsite.com/page-with-imperva",
+		Metadata: capmonster.ImpervaMetadata{
+			IncapsulaScriptURL: "_Incapsula_Resource?SWJIYLWA=1234567890abcdef1234567890abcdef",
+			IncapsulaCookies:   "incap_ses_1234_5678901=testSessionValue1234567890abcdef==; visid_incap_5678901=testVisitorValue1234567890abcdef==;",
+		},
+		Proxy: proxy,
+	}
+
+	// 如有需要，可以检查余额
+	balance, err := client.GetBalance(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Balance:", balance)
+
+	solution, err := client.Solve(ctx, request)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Solution:", string(solution))
+}
+```
+</details>
+  </TabItem>
+
 </Tabs>
